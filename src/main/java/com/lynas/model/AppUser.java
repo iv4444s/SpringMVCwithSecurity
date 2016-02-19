@@ -1,19 +1,11 @@
 package com.lynas.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import java.util.List;
 
-/**
- * Created by sazzad on 2/11/16.
- */
+
 @Entity
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-public @Data class AppUser {
+public  class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +14,47 @@ public @Data class AppUser {
     private String userName;
     @Column(nullable = false)
     private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<UserRole> roles;
+
+    public AppUser() {
+    }
+
+    public AppUser(String userName, String password, List<UserRole> roles) {
+        this.userName = userName;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public List<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

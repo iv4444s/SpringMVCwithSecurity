@@ -1,6 +1,7 @@
 package com.lynas.config;
 
 import com.lynas.model.AppUser;
+import com.lynas.model.UserRole;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -28,20 +29,14 @@ public class DatabaseConfig {
 
 
     @Bean(name = "DataSource")
-    public HikariDataSource dataSourceWinMacLinux() {
-        return getDataSource("127.0.0.1","root","123456");
-    }
-
-
-
-    private HikariDataSource getDataSource(String serverName, String user, String password){
+    public HikariDataSource getDataSource(){
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
         dataSource.addDataSourceProperty("databaseName", "test");
         dataSource.addDataSourceProperty("portNumber", "3306");
-        dataSource.addDataSourceProperty("serverName", serverName);
-        dataSource.addDataSourceProperty("user", user);
-        dataSource.addDataSourceProperty("password", password);
+        dataSource.addDataSourceProperty("serverName", "127.0.0.1");
+        dataSource.addDataSourceProperty("user", "root");
+        dataSource.addDataSourceProperty("password", "");
         return dataSource;
     }
 
@@ -58,7 +53,8 @@ public class DatabaseConfig {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource((DataSource) appContext.getBean("DataSource"));
         localSessionFactoryBean.setAnnotatedClasses(
-                AppUser.class
+                AppUser.class,
+                UserRole.class
         );
 
         Properties properties = new Properties();
