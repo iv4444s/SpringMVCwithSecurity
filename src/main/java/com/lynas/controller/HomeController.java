@@ -29,6 +29,7 @@ public class HomeController {
 
 
     @RequestMapping(value = "/")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String home(){
 
         return "home";
